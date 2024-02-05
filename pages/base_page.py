@@ -11,6 +11,10 @@ class BasePage:
         element = self.driver.find_element(locator)
         return element.text
 
+    def get_text_css(self, css):
+        locator = (By.CSS_SELECTOR, css)
+        element = self.driver.find_element(locator)
+        return element.text
 
     def get_attribute(self, locator, attribute):
         element = self.driver.find_element(By.XPATH, locator)
@@ -42,7 +46,6 @@ class BasePage:
         element = self.driver.find_element(By.XPATH, locator)
         ActionChains(self.driver).double_click(element).perform()
 
-
     def keyboard_click(self, locator):
         element = self.driver.find_element(By.XPATH, locator)
         ActionChains(self.driver).key_down(Keys.CONTROL).click(element).key_up(Keys.CONTROL).perform()
@@ -50,3 +53,13 @@ class BasePage:
     def click_by_js(self, locator):
         element = self.driver.find_element(By.XPATH, locator)
         self.driver.execute_script("arguments[0].click();", element)
+
+    def close_alert(self):
+        alert = self.driver.switch_to.alert
+        print(alert.text)
+        alert.accept()
+
+    def text_alert(self, text):
+        promt = self.driver.switch_to.alert
+        promt.send_keys(text)
+        promt.accept()
